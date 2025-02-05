@@ -17,27 +17,10 @@ export const TodolistTitle = ({ todolist }: Props) => {
 
   const [removeTodolist] = useRemoveTodolistMutation()
   const [updateTodolistTitle] = useUpdateTodolistTitleMutation()
-
-  const dispatch = useAppDispatch()
-
-  const updateQueryData = (status: RequestStatus) => {
-    dispatch(
-      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
-        const index = state.findIndex((tl) => tl.id === id)
-        if (index !== -1) {
-          state[index].entityStatus = status
-        }
-      }),
-    )
-  }
+  
 
   const removeTodolistHandler = () => {
-    updateQueryData("loading")
     removeTodolist(id)
-      .unwrap()
-      .catch(() => {
-        updateQueryData("idle")
-      })
   }
 
   const updateTodolistHandler = (title: string) => {

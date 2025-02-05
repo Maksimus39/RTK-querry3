@@ -6,6 +6,12 @@ export const baseApi = createApi({
   refetchOnFocus: true,
   refetchOnReconnect: true,
   baseQuery: async (args, api, extraOptions) => {
+    
+    
+    await new Promise((resolve) => {
+      setTimeout(resolve,2000)
+    })
+
     const result = await fetchBaseQuery({
       baseUrl: process.env.REACT_APP_BASE_URL,
       prepareHeaders: (headers) => {
