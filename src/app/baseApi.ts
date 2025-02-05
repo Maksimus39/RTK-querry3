@@ -3,6 +3,8 @@ import { handleError } from "common/utils"
 
 export const baseApi = createApi({
   reducerPath: "todolistsApi",
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
   baseQuery: async (args, api, extraOptions) => {
     const result = await fetchBaseQuery({
       baseUrl: process.env.REACT_APP_BASE_URL,

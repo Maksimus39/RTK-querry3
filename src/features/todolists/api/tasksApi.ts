@@ -3,11 +3,19 @@ import { BaseResponse } from "common/types"
 import { baseApi } from "../../../app/baseApi"
 import { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
 
+export const COUNT = 5
+
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getTasks: build.query<GetTasksResponse, string>({
-      query: (todolistId) => `todo-lists/${todolistId}/tasks`,
-      providesTags: (res, err, todolistId) => {
+    getTasks: build.query<GetTasksResponse, { todolistId: string; args: { page: number } }>({
+      query: ({ todolistId, args }) => {
+        return {
+          url: `todo-lists/${todolistId}/tasks`,
+          params: { ...args, count: COUNT },
+        }
+      },
+      // keepUnusedDataFor: 5,
+      providesTags: (res, err, { todolistId }) => {
         return [{ type: "Task", id: todolistId }]
       },
     }),
